@@ -109,7 +109,7 @@ const props = withDefaults(defineProps<IProps>(), {
 })
 
 const emits = defineEmits<{
-  (e: 'update:modelValue'): void
+  (e: 'update:modelValue', visible: boolean): void
   (e: 'success'): void
 }>()
 

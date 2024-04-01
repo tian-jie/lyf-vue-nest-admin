@@ -82,11 +82,13 @@ export default defineComponent({
 .breadcrumb-container {
   display: flex;
   align-items: center;
+
   .collapsed-icon {
+    margin-right: 20px;
     font-size: 22px;
     cursor: pointer;
-    margin-right: 20px;
   }
+
   .no-redirect {
     color: #97a8be;
     cursor: text;

@@ -144,7 +144,7 @@ const getNextElement = (element: HTMLElement) => {
   if (element.nextElementSibling) {
     return element.nextElementSibling
   } else {
-    var next = element.nextSibling
+    let next = element.nextSibling
     while (next && next.nodeType !== 1) {
       next = next.nextSibling
     }
@@ -159,8 +159,8 @@ onMounted(() => {
 </script>
 <style scoped lang="scss">
 .drag-wrapper {
+  display: flex;
   width: 100%;
   height: 100%;
-  display: flex;
 }
 </style>

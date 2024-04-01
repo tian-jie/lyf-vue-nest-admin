@@ -150,7 +150,7 @@ const props = withDefaults(defineProps<IProps>(), {
 })
 
 const emits = defineEmits<{
-  (e: 'update:modelValue'): void
+  (e: 'update:modelValue', visible: boolean): void
   (e: 'success'): void
 }>()
 
@@ -170,12 +170,22 @@ const validateConfirmPassword = (rule: any, value: string, callback: any) => {
 const formRules = {
   username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 2, max: 20, message: '用户名长度必须介于 2 和 20 之间', trigger: 'blur' }
+    {
+      min: 2,
+      max: 20,
+      message: '用户名长度必须介于 2 和 20 之间',
+      trigger: 'blur'
+    }
   ],
   nickname: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 5, max: 20, message: '用户密码长度必须介于 5 和 20 之间', trigger: 'blur' }
+    {
+      min: 5,
+      max: 20,
+      message: '用户密码长度必须介于 5 和 20 之间',
+      trigger: 'blur'
+    }
   ],
   confirmPassword: [
     { required: true, message: '请输入密码', trigger: 'blur' },
@@ -244,7 +254,7 @@ const init = async () => {
  * @param {Number} id
  */
 const getUserDetailById = (id: number) => {
-  return getDetailById(id).then(({ data = {} }) => {
+  return getDetailById(id).then(({ data }) => {
     const detail = Object.assign({}, data, {
       roleId: (data.roles || []).map(item => item.id)
     })

@@ -49,33 +49,39 @@ export default defineComponent({
   position: relative;
   width: 100%;
   height: 100%;
+
   .sidebar-container {
     float: left;
     height: 100%;
     background-color: #001529;
+
     .sidebar-header {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 50px;
+
       img {
         width: 32px;
         height: 32px;
       }
+
       &__title {
+        margin-left: 10px;
         font-size: 16px;
         color: #fff;
-        margin-left: 10px;
       }
     }
+
     .sidebar-main {
-      height: calc(100% - 50px);
       overflow: auto;
+      height: calc(100% - 50px);
     }
   }
+
   .main-container {
-    height: 100%;
     display: flex;
+    height: 100%;
     flex-direction: column;
   }
 }

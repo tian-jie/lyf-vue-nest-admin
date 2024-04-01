@@ -39,7 +39,7 @@
 import { defineComponent, reactive, toRef, toRefs } from 'vue'
 
 import { isExternal } from '@/utils/validate'
-import path from 'path'
+import path from 'path-browserify'
 import Item from './item.vue'
 import AppLink from './link.vue'
 import LyfIcon from '@/components/lyf-icon/index.vue'

@@ -216,6 +216,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .dept-container {
   height: 100%;
+
   .search-form {
     .el-form-item {
       margin-right: 10px;

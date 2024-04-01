@@ -11,8 +11,9 @@
 <style scoped lang="scss">
 .filter-layout {
   display: flex;
-  width: 100%;
   justify-content: space-between;
+  width: 100%;
+
   :deep(.el-form) {
     .el-form-item {
       margin-right: 10px;

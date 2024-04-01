@@ -250,6 +250,7 @@ onMounted(async () => {
 <style scoped lang="scss">
 .permission-container {
   height: 100%;
+
   .search-form {
     .el-form-item {
       margin-right: 10px;

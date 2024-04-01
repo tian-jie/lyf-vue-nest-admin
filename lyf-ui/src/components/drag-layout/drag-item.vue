@@ -5,7 +5,9 @@
     <div
       v-if="resizeShow"
       class="resize"
-      :style="{ width: (dragResizeWidth || dragWrapContext?.dragResizeWidth) + 'px' }"
+      :style="{
+        width: (dragResizeWidth || dragWrapContext?.dragResizeWidth) + 'px'
+      }"
     ></div>
   </div>
 </template>
@@ -36,14 +38,15 @@ const dragItemRef = ref(null)
 <style scoped lang="scss">
 .drag-item {
   position: relative;
+
   .resize {
     position: absolute;
     top: 0;
     right: 0;
-    height: 100%;
-    cursor: col-resize;
-    background-color: #d6d6d6;
     z-index: 999;
+    height: 100%;
+    background-color: #d6d6d6;
+    cursor: col-resize;
   }
 }
 </style>

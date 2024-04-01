@@ -55,10 +55,12 @@ export default defineComponent({
   display: flex;
   align-items: center;
   margin-left: 20px;
+
   .user-name {
     margin-left: 10px;
     cursor: pointer;
   }
+
   .dropdown-icon {
     font-size: 20px;
     cursor: pointer;

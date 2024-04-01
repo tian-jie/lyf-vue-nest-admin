@@ -29,7 +29,7 @@
 
     <!-- 多级表头 -->
     <template v-if="Array.isArray(item.children) && item.children.length > 0" #default>
-      <lyf-table-item v-for="(tableItem, index) in item.children" :key="index" :item="tableItem"></lyf-table-item>
+      <table-item v-for="(tableItem, index) in item.children" :key="index" :item="tableItem"></table-item>
     </template>
   </el-table-column>
 </template>

@@ -101,53 +101,66 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 .tag-visited {
-  height: 32px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   padding: 0 20px;
+  height: 32px;
+  box-shadow:
+    0 1px 3px 0 rgb(0 0 0 / 10%),
+    0 1px 2px 0 rgb(0 0 0 / 6%);
+
   :deep(.el-scrollbar__view) {
     height: 100%;
+
     .tag-list {
       display: flex;
       align-items: center;
       height: 100%;
+
       .tag-item {
         display: flex;
         align-items: center;
-        border: 1px solid rgba(229, 231, 235);
         padding: 2px 6px;
         height: 25px;
-        cursor: pointer;
         color: #4b5563;
+        border: 1px solid rgb(229 231 235);
+        cursor: pointer;
+
         & ~ .tag-item {
           margin-left: 8px;
         }
+
         &.active {
+          color: #fff;
           background-color: $--color-primary;
-          color: #ffffff;
         }
+
         .circle-icon {
           display: inline-block;
+          margin-right: 5px;
           width: 8px;
           height: 8px;
+          background-color: #fff;
           border-radius: 50%;
-          background-color: #ffffff;
-          margin-right: 5px;
         }
+
         .tag-name {
           margin-right: 6px;
         }
+
         .close-icon {
-          font-size: 12px;
           width: 12px;
           height: 12px;
+          font-size: 12px;
           border-radius: 50%;
+
           svg {
             vertical-align: super;
           }
+
           &:hover {
             background-color: #d1d5db;
+
             svg {
-              color: #ffffff;
+              color: #fff;
             }
           }
         }

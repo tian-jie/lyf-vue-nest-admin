@@ -372,11 +372,13 @@ onMounted(() => {
 <style scoped lang="scss">
 .user-list-container {
   height: 100%;
+
   .search-form {
     .el-form-item {
       margin-right: 10px;
     }
   }
+
   .pagination-container {
     margin-top: 10px;
   }

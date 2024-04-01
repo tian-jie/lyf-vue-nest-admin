@@ -22,19 +22,21 @@ const selectedDept = ref()
   display: flex;
   width: 100%;
   height: 100%;
+
   .dept-layout {
-    width: 250px;
-    flex-shrink: 0;
-    height: 100%;
     padding: 10px;
-    background-color: #fff;
-  }
-  .user-layout {
-    flex: 1;
+    width: 250px;
     height: 100%;
+    background-color: #fff;
+    flex-shrink: 0;
+  }
+
+  .user-layout {
+    overflow-x: hidden;
     padding: 10px;
     margin-left: 10px;
-    overflow-x: hidden;
+    height: 100%;
+    flex: 1;
   }
 }
 </style>

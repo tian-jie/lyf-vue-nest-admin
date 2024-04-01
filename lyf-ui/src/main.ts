@@ -5,7 +5,7 @@ import router from '@/router/index'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import locale from 'element-plus/lib/locale/lang/zh-cn'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 import pinia from '@/store/index'
 // 全局样式
@@ -18,4 +18,4 @@ import '@/assets/iconfonts/iconfont.js'
 import directives from '@/directives/index'
 
 const app = createApp(App)
-app.use(router).use(pinia).use(ElementPlus, { locale }).use(directives).mount('#app')
+app.use(router).use(pinia).use(ElementPlus, { locale: zhCn }).use(directives).mount('#app')

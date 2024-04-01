@@ -84,6 +84,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   height: 100%;
+
   .selected-dept {
     display: flex;
     justify-content: space-between;

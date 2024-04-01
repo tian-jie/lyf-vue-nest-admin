@@ -17,7 +17,7 @@ export default defineComponent({
   setup(props) {
     const { title } = toRefs(props)
     const vnodes: any = []
-    if (title) {
+    if (title.value) {
       vnodes.push(<span class="menu-title">{title.value}</span>)
     }
     return () => vnodes

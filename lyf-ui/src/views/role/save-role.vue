@@ -37,10 +37,10 @@
         <div class="per-panel">
           <div class="panel-header">
             <div class="panel-header__btn">
-              <el-checkbox @change="(value:boolean) => handleCheckAll(permissionTree, value)">
+              <el-checkbox @change="(value: boolean) => handleCheckAll(permissionTree, value)">
                 全选/全不选
               </el-checkbox>
-              <el-checkbox @change="(value:boolean) => handleExpandOrFold(value)"> 展开/折叠 </el-checkbox>
+              <el-checkbox @change="(value: boolean) => handleExpandOrFold(value)"> 展开/折叠 </el-checkbox>
             </div>
           </div>
           <div class="panel-body">
@@ -117,7 +117,7 @@ const props = withDefaults(defineProps<IProps>(), {
 })
 
 const emits = defineEmits<{
-  (e: 'update:modelValue'): void
+  (e: 'update:modelValue', visible: boolean): void
   (e: 'success'): void
 }>()
 
@@ -306,42 +306,50 @@ const handleEdit = () => {
 .block-item {
   width: 100%;
 }
+
 .per-panel {
-  flex: 1;
-  border: 1px solid #e5e6e7;
   min-height: 100px;
+  border: 1px solid #e5e6e7;
   border-radius: 4px;
+  flex: 1;
   line-height: normal;
+
   .panel-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #e5e6e7;
+    align-items: center;
     padding: 5px 10px;
     background-color: #fbfbfb;
+    border-bottom: 1px solid #e5e6e7;
+
     &__title {
       font-weight: bold;
     }
   }
+
   .panel-body {
     padding: 10px 5px;
   }
 }
+
 .save-form {
   :deep(.el-checkbox__input.is-disabled.is-checked) {
     .el-checkbox__inner {
       background-color: $--color-primary;
       border-color: $--color-primary;
     }
+
     .el-checkbox__inner::after {
       border-color: #fff;
     }
   }
+
   .custom-tree-node {
-    flex: 1;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+    flex: 1;
+
     .node-btn {
       margin-left: 20px;
     }

@@ -24,10 +24,10 @@ const iconName = computed(() => {
 </script>
 <style scoped lang="scss">
 .lyf-icon svg {
+  overflow: hidden;
   width: 1em;
   height: 1em;
   vertical-align: -0.15em;
-  fill: currentColor;
-  overflow: hidden;
+  fill: currentcolor;
 }
 </style>

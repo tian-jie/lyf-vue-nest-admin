@@ -65,7 +65,7 @@ const props = withDefaults(defineProps<IProps>(), {
 })
 
 const emits = defineEmits<{
-  (e: 'update:modelValue'): void
+  (e: 'update:modelValue', visible: boolean): void
   (e: 'success'): void
 }>()
 
@@ -85,7 +85,12 @@ const validateConfirmPassword = (rule: any, value: string, callback: any) => {
 const formRules = {
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 5, max: 20, message: '用户密码长度必须介于 5 和 20 之间', trigger: 'blur' }
+    {
+      min: 5,
+      max: 20,
+      message: '用户密码长度必须介于 5 和 20 之间',
+      trigger: 'blur'
+    }
   ],
   confirmPassword: [
     { required: true, message: '请输入密码', trigger: 'blur' },

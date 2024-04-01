@@ -114,51 +114,61 @@ const handleLogin = () => {
   width: 100%;
   height: 100%;
   background-color: #2d3a4b;
+
   .form-container {
     position: absolute;
     top: 20%;
     left: 50%;
-    transform: translateX(-50%);
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    width: 520px;
     padding: 0 35px;
+    width: 520px;
+    transform: translateX(-50%);
+    flex-direction: column;
+
     // height: 280px;
     .login-title {
-      color: #fff;
       margin-bottom: 40px;
-      font-weight: normal;
       font-size: 26px;
+      color: #fff;
+      font-weight: normal;
     }
+
     :deep(.login-form) {
       width: 100%;
       height: 100%;
+
       .el-form-item {
         margin-bottom: 22px;
       }
+
       .el-input__wrapper {
-        background-color: rgba(0, 0, 0, 0.1);
-        border: 1px solid hsla(0, 0%, 100%, 0.1);
+        background-color: rgb(0 0 0 / 10%);
+        border: 1px solid hsl(0deg 0% 100% / 10%);
         box-shadow: none;
       }
+
       .el-input__inner {
         height: 48px;
         line-height: 48px;
         color: #fff;
       }
+
       .el-input__prefix {
         font-size: 18px;
       }
+
       .rem-checkbox {
         .el-checkbox__label {
           color: #fff;
         }
       }
+
       .device-item {
         color: #fff;
       }
+
       .login-btn {
         width: 100%;
         height: 38px;

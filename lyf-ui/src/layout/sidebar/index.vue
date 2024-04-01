@@ -61,9 +61,11 @@ export default defineComponent({
 <style scoped lang="scss">
 .sidebar {
   height: 100%;
+
   :deep(.el-menu) {
     border-right: none;
   }
+
   :deep(.el-menu-item) {
     &.is-active {
       background-color: $--color-primary;

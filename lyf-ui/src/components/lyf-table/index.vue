@@ -1,17 +1,17 @@
 <template>
   <el-table ref="elTableRef" :data="tableData">
-    <lyf-table-item
+    <table-item
       v-for="(item, index) in columns"
       :key="index"
       :item="item"
       @filter-change="data => handleKeywordsFilterChange(data.value, data.prop)"
-    ></lyf-table-item>
+    ></table-item>
   </el-table>
 </template>
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 
-import LyfTableItem from './lyf-table-item.vue'
+import TableItem from './table-item.vue'
 import { ElTable } from 'element-plus'
 
 interface IProps {

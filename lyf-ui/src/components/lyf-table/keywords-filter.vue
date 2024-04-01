@@ -65,17 +65,20 @@ const handleReset = () => {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+
   .el-button {
     padding: 8px 24px;
   }
 }
+
 .filter-icon {
   position: absolute;
-  right: 10px;
   top: 50%;
+  right: 10px;
+  font-size: 18px;
   transform: translateY(-50%);
   cursor: pointer;
-  font-size: 18px;
+
   &.active {
     color: $--color-primary;
   }

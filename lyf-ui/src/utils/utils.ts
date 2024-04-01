@@ -62,12 +62,14 @@ export function debounce(func: () => void, time: number, immediate: boolean = fa
   return (...args: any) => {
     if (timer) clearInterval(timer)
     if (immediate) {
+      // @ts-ignore
       if (!timer) func.apply(this, args)
       timer = window.setTimeout(() => {
         timer = null
       }, time)
     } else {
       timer = window.setTimeout(() => {
+        // @ts-ignore
         func.apply(this, args)
       }, time)
     }
@@ -120,7 +122,7 @@ export function formatDate(date: Date | string, format: string) {
  */
 
 export function arrayToTree(data: any[], id = 'id', parentId = 'parentId', childrenKey = 'children') {
-  let res = []
+  let res: any[] = []
   let temp: any = {}
   for (let i = 0; i < data.length; i++) {
     temp[data[i][id]] = data[i]
