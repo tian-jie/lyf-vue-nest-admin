@@ -12,12 +12,24 @@
                 "buildCommand": "npm run build",
                 "outputDirectory": "lyf-admin/dist"
             }
+        },
+        {
+            "src": "lyf-ui/package.json",
+            "use": "@vercel/node",
+            "config": {
+                "runtime": "nodejs",
+                "engines": {
+                    "node": "16"
+                },
+                "buildCommand": "npm run build && cp -r dist/* lyf-admin/dist",
+                "outputDirectory": "."
+            }
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "lyf-admin/dist/main.js"
+            "dest": "lyf-admin/dist/main.js" // 替换为你的入口文件
         }
     ]
 }
