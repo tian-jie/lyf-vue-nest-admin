@@ -29,7 +29,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "lyf-admin/dist/main.js" // 替换为你的入口文件
+            "dest": "lyf-admin/dist/main.js" 
         }
     ]
 }
