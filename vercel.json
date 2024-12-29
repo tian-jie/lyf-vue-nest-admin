@@ -1,35 +1,23 @@
 {
     "version": 2,
     "builds": [
-        {
-            "src": "lyf-admin/package.json",
-            "use": "@vercel/node",
-            "config": {
-                "runtime": "nodejs",
-                "engines": {
-                    "node": "16"
-                },
-                "buildCommand": "npm run build",
-                "outputDirectory": "lyf-admin/dist"
-            }
-        },
-        {
-            "src": "lyf-ui/package.json",
-            "use": "@vercel/node",
-            "config": {
-                "runtime": "nodejs",
-                "engines": {
-                    "node": "16"
-                },
-                "buildCommand": "npm run build && cp -r dist/* lyf-admin/dist",
-                "outputDirectory": "."
-            }
+      {
+        "src": "lyf-admin/package.json",
+        "use": "@vercel/node",
+        "config": {
+          "runtime": "nodejs",
+          "engines": {
+            "node": "22"
+          },
+          "buildCommand": "npm run build",
+          "outputDirectory": "lyf-admin/dist"
         }
+      }
     ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "lyf-admin/dist/main.js" 
-        }
+      {
+        "src": "/(.*)",
+        "dest": "lyf-admin/dist/main.js"
+      }
     ]
-}
+  }
