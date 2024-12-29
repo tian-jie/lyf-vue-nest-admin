@@ -3,7 +3,7 @@ export default () => {
     process.env;
   return {
     app: {
-      port: APP_SERVICE_PORT || 8888
+      port: APP_SERVICE_PORT || 443
     },
     // 数据库
     database: {},
