@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && cp -r dist/* ../lyf-admin/dist",
     "preview": "vue-tsc --noEmit && vite preview",
     "lint:eslint": "eslint --fix --ext .js,.jsx,.tsx,.ts,.vue ./src",
     "lint:prettier": "prettier --write \"src/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",

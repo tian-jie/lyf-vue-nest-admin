@@ -1,0 +1,23 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "lyf-admin/package.json",
+        "use": "@vercel/node",
+        "config": {
+          "runtime": "nodejs",
+          "engines": {
+            "node": "16"
+          },
+          "buildCommand": "npm run build",
+          "outputDirectory": "lyf-admin/dist"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "lyf-admin/dist/main.js" // 替换为你的入口文件
+      }
+    ]
+  }
