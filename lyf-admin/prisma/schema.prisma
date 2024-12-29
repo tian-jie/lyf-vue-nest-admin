@@ -134,3 +134,56 @@ model UserRole {
   @@index([roleId])
   @@map("user_role")
 }
+
+model Card {
+  id Int @id @default(autoincrement())
+  content String @db.VarChar(1024)
+  user String? @db.VarChar(64)
+  // 创建时间
+  createTime DateTime? @default(now()) @map("create_time")
+  // 编辑时间
+  updateTime DateTime? @updatedAt @map("update_time")
+
+  cardGroupId Int @map("card_group_id")
+   // 是否逻辑删除
+  isDelete   Boolean   @default(false) @map("is_delete")
+
+  @@index([cardGroupId])
+  @@map("card")
+}
+
+model CardGroup {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(255)
+  sort Int? @default(1)
+  boardId Int @map("board_id")
+
+  color String @db.VarChar(20)
+  // 创建时间
+  createTime DateTime? @default(now()) @map("create_time")
+  // 编辑时间
+  updateTime DateTime? @updatedAt @map("update_time")
+  // 是否逻辑删除
+  isDelete   Boolean   @default(false) @map("is_delete")
+
+  @@index([boardId])
+  @@map("card_group")
+}
+
+model Board {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(1024)
+  description String? @db.VarChar(1024)
+  owner Int @map("owner")
+
+  // 创建时间
+  createTime DateTime? @default(now()) @map("create_time")
+  // 编辑时间
+  updateTime DateTime? @updatedAt @map("update_time")
+  // 是否逻辑删除
+  isDelete   Boolean   @default(false) @map("is_delete")
+
+  @@index([owner])
+  @@map("board")
+  
+}

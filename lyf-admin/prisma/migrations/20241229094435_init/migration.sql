@@ -79,3 +79,46 @@ CREATE TABLE `user_role` (
     INDEX `user_role_role_id_idx`(`role_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `card` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `content` VARCHAR(1024) NOT NULL,
+    `user` VARCHAR(64) NULL,
+    `create_time` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `update_time` DATETIME(3) NULL,
+    `card_group_id` INTEGER NOT NULL,
+    `is_delete` BOOLEAN NOT NULL DEFAULT false,
+
+    INDEX `card_card_group_id_idx`(`card_group_id`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `card_group` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) NOT NULL,
+    `sort` INTEGER NULL DEFAULT 1,
+    `board_id` INTEGER NOT NULL,
+    `color` VARCHAR(20) NOT NULL,
+    `create_time` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `update_time` DATETIME(3) NULL,
+    `is_delete` BOOLEAN NOT NULL DEFAULT false,
+
+    INDEX `card_group_board_id_idx`(`board_id`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `board` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(1024) NOT NULL,
+    `description` VARCHAR(1024) NULL,
+    `owner` INTEGER NOT NULL,
+    `create_time` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `update_time` DATETIME(3) NULL,
+    `is_delete` BOOLEAN NOT NULL DEFAULT false,
+
+    INDEX `board_owner_idx`(`owner`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

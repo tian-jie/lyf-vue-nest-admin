@@ -1,12 +1,5 @@
 <template>
   <div class="app-container">
-    <div class="sidebar-container" :style="{ width: isCollapsed ? '64px' : '260px' }">
-      <div class="sidebar-header">
-        <img src="~@/assets/images/icon.gif" alt="" />
-        <span v-if="!isCollapsed" class="sidebar-header__title">lyf-admin</span>
-      </div>
-      <sidebar class="sidebar-main"></sidebar>
-    </div>
     <div class="main-container">
       <navbar></navbar>
       <app-main></app-main>
@@ -18,28 +11,16 @@ import { defineComponent, computed } from 'vue'
 import { useAppStore } from '@/store/index'
 
 import AppMain from './app-main.vue'
-import Sidebar from './sidebar/index.vue'
 import Navbar from './navbar/index.vue'
-import TagVisited from './tag-visited/index.vue'
 
 export default defineComponent({
   components: {
     AppMain,
-    Sidebar,
     Navbar,
-    TagVisited
   },
   setup() {
-    const appStore = useAppStore()
-
     // 左侧菜单收缩状态
-    const isCollapsed = computed(() => {
-      return appStore.isCollapsed
-    })
-
-    return {
-      isCollapsed
-    }
+    const isCollapsed = true;
   }
 })
 </script>

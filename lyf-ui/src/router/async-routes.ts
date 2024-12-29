@@ -52,5 +52,38 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
         }
       }
     ]
+  },
+  {
+    path: '/board',
+    name: 'board',
+    component: () => import('@/layout/board-index.vue'),
+    meta: {
+      title: 'Board',
+      icon: 'icon-menu-xitong',
+      permissions: ['system:user', 'system:dept', 'system:role', 'system:permission']
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'board-index',
+        component: () => import('@/views/board/index.vue'),
+        meta: {
+          title: 'Board index',
+          icon: 'icon-menu-yonghu',
+          permissions: ['system:user', 'system:dept', 'system:role', 'system:permission']
+        }
+      },
+      {
+        path: 'board/:id',
+        name: 'board-board',
+        component: () => import('@/views/board/board.vue'),
+        meta: {
+          title: 'Board index',
+          icon: 'icon-menu-yonghu',
+          hidden: true,
+          permissions: ['system:user', 'system:dept', 'system:role', 'system:permission']
+        }
+      },
+    ]
   }
 ]

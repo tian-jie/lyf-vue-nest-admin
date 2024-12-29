@@ -53,6 +53,14 @@
 
 <br>
 
+## prisma
+- 每次修改数据库prisma文件后，依次执行以下命令
+```
+npx prisma migrate dev --name <migration name>
+npx prisma migrate deploy
+npx prisma generate
+```
+
 ## 系统截图
 
 <div>

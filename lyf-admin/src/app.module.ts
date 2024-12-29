@@ -16,6 +16,11 @@ import { DepartmentModule } from './modules/department/department.module';
 
 import { JwtAuthGuard } from 'src/common/guards/jwt.auth.guard';
 import { PermissionAuthGuard } from 'src/common/guards/permissions.auth.guard';
+import { BoardModule } from './modules/board/board.module';
+import { CardGroupModule } from './modules/card-group/card-group.module';
+import { CardModule } from './modules/card/card.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -24,6 +29,9 @@ import { PermissionAuthGuard } from 'src/common/guards/permissions.auth.guard';
       envFilePath: [`.env.${process.env.NODE_ENV}`, '.env'],
       load: [Configuration]
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, ''), // 指向你的Vue构建输出目录
+    }),
     PrismaModule,
     RedisModule,
     SharedModule,
@@ -31,7 +39,10 @@ import { PermissionAuthGuard } from 'src/common/guards/permissions.auth.guard';
     AuthModule,
     PermissionModule,
     RoleModule,
-    DepartmentModule
+    DepartmentModule,
+    BoardModule,
+    CardGroupModule,
+    CardModule
   ],
   controllers: [AppController],
   providers: [
