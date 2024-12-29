@@ -9,15 +9,15 @@
           "engines": {
             "node": "22"
           },
-          "buildCommand": "npm run build",
-          "outputDirectory": "lyf-admin/dist"
+          "buildCommand": "npm run build:prod",
+          "outputDirectory": "dist"
         }
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "lyf-admin/dist/main.js"
+        "dest": "dist/main.js"
       }
     ]
   }
