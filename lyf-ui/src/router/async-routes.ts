@@ -60,7 +60,7 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
     meta: {
       title: 'Board',
       icon: 'icon-menu-xitong',
-      permissions: ['retrobooard:owner']
+      permissions: ['retroboard:owner']
     },
     children: [
       {
@@ -70,7 +70,7 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
         meta: {
           title: 'Rerto Board',
           icon: 'icon-menu-yonghu',
-          permissions: ['retrobooard:owner']
+          permissions: ['retroboard:owner']
         }
       },
       {
@@ -81,7 +81,7 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
           title: 'Board index',
           icon: 'icon-menu-yonghu',
           hidden: true,
-          permissions: ['retrobooard:owner', 'retroboard:collaborator']
+          permissions: ['retroboard:owner', 'retroboard:collaborator']
         }
       },
     ]
