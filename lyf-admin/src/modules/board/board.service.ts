@@ -67,7 +67,7 @@ export class BoardService {
     }
     // TODO: 这里不知道为什么没有更新成功
     console.log('about to update board - ' + JSON.stringify(updateDto))
-    this.prisma.board.update({
+    await this.prisma.board.update({
       where: { id: updateDto.id },
       data: updateDto
     });
