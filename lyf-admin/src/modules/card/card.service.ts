@@ -52,7 +52,7 @@ export class CardService {
   async update(updateDto: UpdateCardDto) {    
     // TODO: 这里不知道为什么没有更新成功
     console.log('about to update card - ' + JSON.stringify(updateDto))
-    this.prisma.card.update({
+    await this.prisma.card.update({
       where: { id: updateDto.id },
       data: updateDto
     });
