@@ -1,6 +1,6 @@
 import { request } from '@/utils/request'
 import { AxiosPromise } from 'axios'
-import { IQueryOneBoardParams, IBoard, ISaveCardParams, ICard, IQueryBoardsParams } from './types'
+import { IQueryOneBoardParams, IBoard, ISaveCardParams, ICard, IQueryBoardsParams, ISaveCardGroupParams, ISaveBoardParams } from './types'
 
 /**
  * 获取一个项目的详细信息，带字表
@@ -37,6 +37,40 @@ export function editCard(params?: ISaveCardParams): AxiosPromise<ICard> {
     data: params
   })
 }
+
+export function addBoard(params?: ISaveBoardParams): AxiosPromise<ICard> {
+  return request({
+    method: 'POST',
+    url: '/board',
+    data: params
+  })
+}
+
+export function editBoard(params?: ISaveBoardParams): AxiosPromise<ICard> {
+  return request({
+    method: 'PUT',
+    url: '/board',
+    data: params
+  })
+}
+
+export function addCardGroup(params?: ISaveCardGroupParams): AxiosPromise<ICard> {
+  return request({
+    method: 'POST',
+    url: '/cardGroup',
+    data: params
+  })
+}
+
+export function editCardGroup(params?: ISaveCardGroupParams): AxiosPromise<ICard> {
+  return request({
+    method: 'PUT',
+    url: '/cardGroup',
+    data: params
+  })
+}
+
+
 
 // /**
 //  * 获取除某个部门以及其所有子孙部门的列表

@@ -82,7 +82,6 @@ function handleEditCard(card: ICard) {
 const saveDialogVisible = ref(false)
 const saveDialogData = ref()
 const saveDialogType = ref(DialogTypeEnum.ADD)
-const saveParentId = ref()
 const cardGroupId = ref(0)
 
 

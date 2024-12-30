@@ -8,8 +8,8 @@ import { UtilsService } from '../shared/utils.service';
 export class BoardService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly utils: UtilsService,
-  ) { }
+    private readonly utils: UtilsService
+  ) {}
 
   /**
    * 通过id获取board信息
@@ -31,7 +31,10 @@ export class BoardService {
   async getByName(name: string, userId: number) {
     return this.prisma.board.findMany({
       where: {
-        AND: [{ name: this.utils.isEmpty(name) ? undefined : { contains: name } }, { owner: userId }]
+        AND: [
+          { name: this.utils.isEmpty(name) ? undefined : { contains: name } },
+          { owner: userId }
+        ]
       }
     });
   }
@@ -41,10 +44,7 @@ export class BoardService {
    */
   async create(createBoardDto: CreateBoardDto, owner: number) {
     // 不能有重名的项目
-    const existBoards = await this.getByName(
-      createBoardDto.name,
-      owner
-    );
+    const existBoards = await this.getByName(createBoardDto.name, owner);
     if (existBoards && existBoards.length > 0) {
       throw new ApiException('已存在同名项目。');
     }
@@ -52,7 +52,8 @@ export class BoardService {
     await this.prisma.board.create({
       data: {
         name: createBoardDto.name,
-        owner: owner
+        owner: owner,
+        description: createBoardDto.description
       }
     });
   }
@@ -66,7 +67,7 @@ export class BoardService {
       throw new ApiException('不存在的项目');
     }
     // TODO: 这里不知道为什么没有更新成功
-    console.log('about to update board - ' + JSON.stringify(updateDto))
+    console.log('about to update board - ' + JSON.stringify(updateDto));
     await this.prisma.board.update({
       where: { id: updateDto.id },
       data: updateDto
