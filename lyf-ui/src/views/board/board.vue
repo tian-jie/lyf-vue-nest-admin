@@ -38,7 +38,12 @@ async function refresh(){
   console.log(boardId)
   var board = await getBoard(boardId)
 
-  r.cardGroups = board.cardGroups
+  r.cardGroups = board.cardGroups.sort((a, b) => {
+    if (a.sort === b.sort) {
+      return a.id - b.id;
+    }
+    return a.sort - b.sort;
+  });
   r.boardName = board.name
 }
 

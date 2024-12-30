@@ -207,7 +207,7 @@ export class RoleService {
       };
     });
 
-    this.prisma.role.update({
+    await this.prisma.role.update({
       where: {
         id: updateRoleDto.id
       },

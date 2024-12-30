@@ -8,8 +8,8 @@ import { UtilsService } from '../shared/utils.service';
 export class CardGroupService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly utils: UtilsService,
-  ) { }
+    private readonly utils: UtilsService
+  ) {}
 
   /**
    * 通过id获取cardGroup信息
@@ -32,7 +32,10 @@ export class CardGroupService {
   async getByName(name: string, boardId: number) {
     return this.prisma.cardGroup.findMany({
       where: {
-        AND: [{ name: this.utils.isEmpty(name) ? undefined : { contains: name } }, { boardId }]
+        AND: [
+          { name: this.utils.isEmpty(name) ? undefined : { contains: name } },
+          { boardId }
+        ]
       }
     });
   }
@@ -44,7 +47,7 @@ export class CardGroupService {
     // 不能有重名的卡片组
     const existCardGroups = await this.getByName(
       createCardGroupDto.name,
-      createCardGroupDto.boardId,
+      createCardGroupDto.boardId
     );
     if (existCardGroups && existCardGroups.length > 0) {
       throw new ApiException('已存在同名卡片组。');
@@ -64,8 +67,8 @@ export class CardGroupService {
       throw new ApiException('不存在的卡片组');
     }
     // TODO: 这里不知道为什么没有更新成功
-    console.log('about to update cardGroup - ' + JSON.stringify(updateDto))
-    this.prisma.cardGroup.update({
+    console.log('about to update cardGroup - ' + JSON.stringify(updateDto));
+    await this.prisma.cardGroup.update({
       where: { id: updateDto.id },
       data: updateDto
     });

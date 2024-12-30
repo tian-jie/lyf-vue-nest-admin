@@ -16,7 +16,8 @@ import { CacheModule } from '@nestjs/cache-manager';
           host: configService.get('REDIS_HOST'),
           port: configService.get('REDIS_PORT'),
           db: configService.get('REDIS_DB'),
-          auth_pass: configService.get('REDIS_PASSPORT')
+          auth_pass: configService.get('REDIS_PASSPORT'),
+          url: `redis://${configService.get('REDIS_HOST')}:${configService.get('REDIS_PORT')}`
         };
       }
     })
