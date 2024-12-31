@@ -6,8 +6,20 @@
         <el-input type="text" rows="4" v-model="saveForm.name" placeholder="请输入" clearable
           :maxlength="1024"></el-input>
       </el-form-item>
-      <el-form-item prop="description" label="描述">
-        <el-input type="textarea" v-model="saveForm.description"></el-input>
+      <el-form-item prop="color" label="颜色">
+        <el-input type="text" readonly v-model="saveForm.color"></el-input>
+        <div class="color-picker">
+          <div :class="{'color-option': true,  'color-box': true, 'selected': selectedColor=='red'}" style="background-color: red;" @click="selectColor('red')"></div>
+          <div :class="{'color-option': true,  'color-box': true, 'selected': selectedColor=='green'}" style="background-color: green;" @click="selectColor('green')"></div>
+          <div :class="{'color-option': true,  'color-box': true, 'selected': selectedColor=='yellowgreen'}" style="background-color: yellowgreen;" @click="selectColor('yellowgreen')"></div>
+          <div :class="{'color-option': true,  'color-box': true, 'selected': selectedColor=='rebeccapurple'}" style="background-color: rebeccapurple;"@click="selectColor('rebeccapurple')"></div>
+          <div :class="{'color-option': true,  'color-box': true, 'selected': selectedColor=='blue'}" style="background-color: blue ;" @click="selectColor('blue')"></div>
+          <div :class="{'color-option': true,  'color-box': true, 'selected': selectedColor=='brown'}" style="background-color: brown;" @click="selectColor('brown')"></div>
+          <div :class="{'color-option': true,  'color-box': true, 'selected': selectedColor=='palevioletred'}" style="background-color: palevioletred;"@click="selectColor('palevioletred')"></div>
+        </div>
+      </el-form-item>
+      <el-form-item prop="boardId">
+        <el-input type="hidden" v-model="_boardId"></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -16,6 +28,8 @@
         <el-button type="primary" @click="dialogType === DialogTypeEnum.ADD ? handleAdd() : handleEdit()">确定</el-button>
       </div>
     </template>
+
+
   </el-dialog>
 </template>
 <script lang="ts" setup>
@@ -23,8 +37,8 @@ import { ref, watch, defineEmits } from 'vue'
 import { ElMessage } from 'element-plus'
 
 import { DialogTypeEnum } from '@/api/common/types'
-import { ISaveBoardParams, IBoard } from '@/api/card-board/types'
-import { addBoard, editBoard } from '@/api/card-board/index'
+import { ISaveCardGroupParams, ICardGroup } from '@/api/card-board/types'
+import { addCardGroup, editCardGroup } from '@/api/card-board/index'
 
 
 const emits = defineEmits<{
@@ -35,14 +49,15 @@ const emits = defineEmits<{
 const DEFAULT_FORM = {
   id: undefined,
   name: '',
-  description: '',
+  boardId: 0,
+  color: 'red'
 }
 
 interface IProps {
   modelValue: boolean
   dialogType: DialogTypeEnum
-  data: IBoard | Record<string, unknown> // 编辑数据
-  cardGroupId: number
+  data: ICardGroup | Record<string, unknown> // 编辑数据
+    boardId: number
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -51,15 +66,17 @@ const props = withDefaults(defineProps<IProps>(), {
   data: () => {
     return {}
   },
+  color: 'red'
 })
 
-const _cardGroupId = ref(props.cardGroupId)
+const _boardId = ref(props.boardId)
 const dialogVisible = ref(false)
-const saveForm = ref<ISaveBoardParams>(Object.assign({}, DEFAULT_FORM))
+const saveForm = ref<ISaveCardGroupParams>(Object.assign({}, DEFAULT_FORM))
 const saveFormRef = ref()
 const formRules = {
   name: [{ required: true, message: '请输入标题', trigger: 'blur' }],
 }
+const selectedColor = ref('red');
 
 watch(
   () => props.modelValue,
@@ -71,6 +88,11 @@ watch(
     }
   }
 )
+
+const selectColor = (color) => {
+  selectedColor.value = color;
+  saveForm.value.color = color;
+};
 
 /**
  * 显示
@@ -91,7 +113,7 @@ const close = () => {
 const init = () => {
   if (props.dialogType === DialogTypeEnum.ADD) {
     saveForm.value = Object.assign({}, DEFAULT_FORM, {
-    })
+      boardId: props.boardId})
   } else {
     saveForm.value = Object.assign({}, DEFAULT_FORM, props.data)
   }
@@ -108,7 +130,7 @@ const buildTitle = () => {
  * 校验
  * @param {Fucntion} callback
  */
-const doValidate = (callback: (params: ISaveBoardParams) => void) => {
+const doValidate = (callback: (params: ISaveCardGroupParams) => void) => {
   saveFormRef.value.validate((valid: boolean) => {
     if (valid) {
       const params = Object.assign({}, saveForm.value)
@@ -122,8 +144,8 @@ const doValidate = (callback: (params: ISaveBoardParams) => void) => {
  * 新增
  */
 const handleAdd = () => {
-  doValidate((params: ISaveBoardParams) => {
-    addBoard(params).then(() => {
+  doValidate((params: ISaveCardGroupParams) => {
+    addCardGroup(params).then(() => {
       emits('success')
       ElMessage({
         type: 'success',
@@ -137,8 +159,8 @@ const handleAdd = () => {
  * 编辑
  */
 const handleEdit = () => {
-  doValidate((params: ISaveBoardParams) => {
-    editBoard(params).then(() => {
+  doValidate((params: ISaveCardGroupParams) => {
+    editCardGroup(params).then(() => {
       emits('success')
       ElMessage({
         type: 'success',
@@ -153,5 +175,15 @@ const handleEdit = () => {
 <style scoped lang="scss">
 .block-item {
   width: 100%;
+}
+
+.color-picker {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.selected {
+  /* 增加阴影 */
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 1);
 }
 </style>

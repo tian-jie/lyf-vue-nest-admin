@@ -13,6 +13,7 @@ export interface ICardGroup{
   id: number
   name: string // 名称
   color: string
+  sort: number
   boardId: number,
   createTime: string // 创建时间
   updateTime: string // 编辑时间
@@ -29,7 +30,7 @@ export interface ICard{
 }
 
 // 新增、编辑卡片
-export interface ISaveCardParams extends Pick<ICard, 'content' | 'cardGroupId'> {
+export interface ISaveCardParams extends Pick<ICard, 'cardGroupId'> {
   id?: number
   content: string,
   cardGroupId: number,
@@ -37,17 +38,18 @@ export interface ISaveCardParams extends Pick<ICard, 'content' | 'cardGroupId'> 
 }
 
 // 新增、编辑Board
-export interface ISaveBoardParams extends Pick<IBoard, 'name' | 'description'> {
+export interface ISaveBoardParams extends Pick<IBoard, 'name'> {
   id?: number
   name: string,
   description: string
 }
 
 // 新增、编辑卡片组
-export interface ISaveCardGroupParams extends Pick<ICardGroup, 'boardId' | 'name'> {
+export interface ISaveCardGroupParams extends Pick<ICardGroup, 'boardId'> {
   id?: number
   boardId: number,
-  name: string
+  name: string,
+  color: string
 }
 
 // 查询参数

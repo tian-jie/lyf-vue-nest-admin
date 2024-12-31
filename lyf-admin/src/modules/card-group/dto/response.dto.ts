@@ -14,6 +14,9 @@ export class CardGroupDto {
   @ApiProperty({ description: '项目' })
   color: string;
 
+  @ApiProperty({ description: '排序' })
+  sort: number;
+
   @ApiProperty({ description: '创建时间' })
   createTime: Date;
 
@@ -22,5 +25,4 @@ export class CardGroupDto {
 
   @ApiPropertyOptional({ description: '卡片' })
   cards?: CardDto[];
-
 }

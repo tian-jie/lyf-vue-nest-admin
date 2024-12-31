@@ -6,16 +6,13 @@
       <div class="color-picker-container" v-show="showPicker">
         <div class="color-option color-box" style="background-color: red;" @click="selectColor('red')"></div>
         <div class="color-option color-box" style="background-color: green;" @click="selectColor('green')"></div>
-        <div class="color-option color-box" style="background-color: yellowgreen;" @click="selectColor('yellowgreen')">
-        </div>
-        <div class="color-option color-box" style="background-color: rebeccapurple;"
-          @click="selectColor('rebeccapurple')"></div>
+        <div class="color-option color-box" style="background-color: yellowgreen;" @click="selectColor('yellowgreen')"></div>
+        <div class="color-option color-box" style="background-color: rebeccapurple;"@click="selectColor('rebeccapurple')"></div>
         <div class="color-option color-box" style="background-color: blue ;" @click="selectColor('blue')"></div>
         <div class="color-option color-box" style="background-color: brown;" @click="selectColor('brown')"></div>
-        <div class="color-option color-box" style="background-color: palevioletred;"
-          @click="selectColor('palevioletred')"></div>
+        <div class="color-option color-box" style="background-color: palevioletred;"@click="selectColor('palevioletred')"></div>
       </div>
-      <div class="title">{{ title }}</div>
+      <div class="card-group-title">{{ title }}</div>
     </div>
     <div class="cards">
       <a @click="handleAddCard">
@@ -26,7 +23,8 @@
 
     <SaveCard v-model="saveDialogVisible" :data="saveDialogData" :card-group-id="cardGroupId"
       :dialog-type="saveDialogType" @success="emit('card-changed')"></SaveCard>
-  </div>
+
+</div>
 </template>
 
 <script setup lang="ts">
@@ -42,7 +40,8 @@ const props = defineProps({
   title: String,
   color: String,
   cards: Array,
-  cardGroupId: Number
+  cardGroupId: Number,
+  boardId: Number
 });
 
 const showPicker = ref(false);
@@ -52,7 +51,7 @@ const showColorPicker = () => {
   showPicker.value = !showPicker.value;
 };
 
-const selectColor = (color) => {
+const selectColor = (color: string) => {
   selectedColor.value = color;
   props.color = color;
   showPicker.value = false;
@@ -63,7 +62,6 @@ const selectColor = (color) => {
  * @param {ICard} card
  */
 function handleAddCard(card?: ICard) {
-  console.log('handle Add card - ' + props.cardGroupId)
   cardGroupId.value = props.cardGroupId
   saveDialogType.value = DialogTypeEnum.ADD
   saveDialogVisible.value = true
@@ -84,6 +82,8 @@ const saveDialogData = ref()
 const saveDialogType = ref(DialogTypeEnum.ADD)
 const cardGroupId = ref(0)
 
+const boardId = ref(0)
+
 
 </script>
 
@@ -93,7 +93,7 @@ const cardGroupId = ref(0)
   height: 24px;
 }
 
-.title {
+.card-group-title {
   margin-left: 10px;
   font-size: medium;
   font-weight: 400;
@@ -116,13 +116,14 @@ const cardGroupId = ref(0)
 .color-picker-container {
   position: absolute;
   top: 100%;
-  background: #fff;
+  background: #eee;
   border: 1px solid #ccc;
   padding: 10px;
   display: flex;
   flex-direction: column;
   /* 设置为纵向布局 */
   margin: -24px 0px 0px 30px;
+  z-index: 100;
 }
 
 .color-option {
