@@ -4,8 +4,10 @@
     <!-- <Filter /> -->
     <div class="card-groups">
       <CardGroup v-for="(cardGroup) in r.cardGroups" :key="cardGroup.id" :title="cardGroup.name" :color="cardGroup.color"
-        :cards="cardGroup.cards" :cardGroupId="cardGroup.id" class="card-group" @card-changed="refresh(1,1)" />
-      <div class="card-groups new-card-groups" @click="handleAddCardGroup"><svg style="width: 40px" t="1735564602757" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1465" ><path d="M992 384 640 384 640 32c0-17.672-14.328-32-32-32l-192 0c-17.672 0-32 14.328-32 32l0 352L32 384c-17.672 0-32 14.328-32 32l0 192c0 17.672 14.328 32 32 32l352 0 0 352c0 17.672 14.328 32 32 32l192 0c17.672 0 32-14.328 32-32L640 640l352 0c17.672 0 32-14.328 32-32l0-192C1024 398.328 1009.672 384 992 384z" fill="#8a8a8a" p-id="1466"></path></svg></div>
+        :cards="cardGroup.cards" :cardGroupId="cardGroup.id" class="card-group" @card-changed="refresh" />
+      <div class="card-groups new-card-groups" @click="handleAddCardGroup()">
+        <svg style="width: 40px" t="1735564602757" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1465" ><path d="M992 384 640 384 640 32c0-17.672-14.328-32-32-32l-192 0c-17.672 0-32 14.328-32 32l0 352L32 384c-17.672 0-32 14.328-32 32l0 192c0 17.672 14.328 32 32 32l352 0 0 352c0 17.672 14.328 32 32 32l192 0c17.672 0 32-14.328 32-32L640 640l352 0c17.672 0 32-14.328 32-32l0-192C1024 398.328 1009.672 384 992 384z" fill="#8a8a8a" p-id="1466"></path></svg>
+      </div>
     </div>
     <SaveCardGroup v-model="saveDialogVisible" :data="saveDialogData" :board-id="boardId"
       :dialog-type="saveDialogType" @success="refresh"></SaveCardGroup>
@@ -13,8 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, reactive, onMounted, ref } from 'vue'
-import { useAppStore } from '@/store/index'
+import { reactive, onMounted, ref } from 'vue'
 import { getOneBoard } from '@/api/card-board/index'
 import { DialogTypeEnum } from '@/api/common/types'
 import { ICardGroup } from '@/api/card-board/types'

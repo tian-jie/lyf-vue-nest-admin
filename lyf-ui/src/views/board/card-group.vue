@@ -15,7 +15,7 @@
       <div class="card-group-title">{{ title }}</div>
     </div>
     <div class="cards">
-      <a @click="handleAddCard">
+      <a @click="handleAddCard()">
         <div :style="{ backgroundColor: selectedColor }" class="add-card">+ Add Card</div>
       </a>
       <Card v-for="card in cards" :key="card.id" :content="card.content" style="card" />
@@ -31,8 +31,9 @@
 import { ref,watch } from 'vue';
 import Card from './card.vue'
 import SaveCard from './save-card.vue'
-import { IBoard, ICard, ICardGroup } from '@/api/card-board/types'
+import { IBoard, ICard, ICardGroup, ISaveCardGroupParams } from '@/api/card-board/types'
 import { DialogTypeEnum } from '@/api/common/types'
+import { editCardGroup } from '@/api/card-board/index'
 
 const emit = defineEmits(['card-changed']);
 
@@ -55,6 +56,14 @@ const selectColor = (color: string) => {
   selectedColor.value = color;
   props.color = color;
   showPicker.value = false;
+
+  editCardGroup({
+    id: props.cardGroupId,
+    color: color,
+    name: props.title,
+  } as ISaveCardGroupParams).then(() => {
+    close()
+  })
 };
 
 /**
@@ -82,7 +91,7 @@ const saveDialogData = ref()
 const saveDialogType = ref(DialogTypeEnum.ADD)
 const cardGroupId = ref(0)
 
-const boardId = ref(0)
+const boardId = ref(props.boardId)
 
 
 </script>

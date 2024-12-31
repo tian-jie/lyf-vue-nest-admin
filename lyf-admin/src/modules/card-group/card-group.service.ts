@@ -8,7 +8,7 @@ import { UtilsService } from '../shared/utils.service';
 export class CardGroupService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly utils: UtilsService,
+    private readonly utils: UtilsService
   ) {}
 
   /**
