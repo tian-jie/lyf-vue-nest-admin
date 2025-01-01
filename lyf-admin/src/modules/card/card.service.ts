@@ -5,14 +5,13 @@ import { ApiException } from 'src/common/exceptions/api-exception';
 import { UtilsService } from '../shared/utils.service';
 import { CardGroupService } from '../card-group/card-group.service';
 
-
 @Injectable()
 export class CardService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly utils: UtilsService,
     private readonly cardGroupService: CardGroupService
-  ) { }
+  ) {}
 
   /**
    * 获取某个卡片组下的所有卡片列表
@@ -32,7 +31,7 @@ export class CardService {
   async getByGroups(cardGroupIds: number[]) {
     //await this.CheckCardGroup(cardGroupId);
     return this.prisma.card.findMany({
-      where: { cardGroupId:{in: cardGroupIds} }
+      where: { cardGroupId: { in: cardGroupIds } }
     });
   }
 
@@ -49,20 +48,19 @@ export class CardService {
   /**
    * 编辑Card
    */
-  async update(updateDto: UpdateCardDto) {    
+  async update(updateDto: UpdateCardDto) {
     // TODO: 这里不知道为什么没有更新成功
-    console.log('about to update card - ' + JSON.stringify(updateDto))
+    console.log('about to update card - ' + JSON.stringify(updateDto));
     await this.prisma.card.update({
       where: { id: updateDto.id },
       data: updateDto
     });
   }
 
-  async CheckCardGroup(id: number){
+  async CheckCardGroup(id: number) {
     const existCard = await this.cardGroupService.getById(id);
     if (!existCard) {
       throw new ApiException('不存在的卡片组');
     }
-
   }
 }

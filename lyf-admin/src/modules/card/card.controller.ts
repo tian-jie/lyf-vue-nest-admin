@@ -1,23 +1,8 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Query,
-  Req
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Req } from '@nestjs/common';
 import { CardService } from './card.service';
-import { CreateCardDto, ListQueryDto, UpdateCardDto } from './dto/request.dto';
+import { CreateCardDto, UpdateCardDto } from './dto/request.dto';
 import { Permission } from 'src/common/decorators/permission.decorator';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiParam,
-  ApiTags
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CardDto } from './dto/response.dto';
 import { ApiResultResponse } from 'src/common/decorators/api-result-response.decorator';
 
@@ -37,8 +22,8 @@ export class CardController {
   async getList(groupId: number): Promise<CardDto[]> {
     const cards = await this.cardService.getByGroup(groupId);
     const cardDtos = [];
-    cards.forEach((p)=>{
-      cardDtos.push(p)
+    cards.forEach((p) => {
+      cardDtos.push(p);
     });
 
     return cardDtos;
@@ -68,5 +53,4 @@ export class CardController {
   async update(@Body() updateCardDto: UpdateCardDto) {
     await this.cardService.update(updateCardDto);
   }
-
 }

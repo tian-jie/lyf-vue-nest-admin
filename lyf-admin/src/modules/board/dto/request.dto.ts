@@ -1,6 +1,5 @@
 import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
-import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class ListQueryDto {
   @ApiPropertyOptional({ description: 'Board名称' })
@@ -11,7 +10,7 @@ export class ListQueryDto {
   @ApiPropertyOptional({ description: 'id' })
   @IsNumber()
   @IsOptional()
-  id: number;
+  id?: number;
 }
 
 export class CreateBoardDto {
@@ -22,6 +21,10 @@ export class CreateBoardDto {
   })
   readonly name: string;
 
+  @ApiPropertyOptional({ description: '描述' })
+  @IsString()
+  @IsOptional()
+  readonly description?: string;
 }
 
 export class UpdateBoardDto extends PartialType(CreateBoardDto) {

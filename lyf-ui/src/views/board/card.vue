@@ -16,5 +16,6 @@ const props = defineProps({
     border: 1px solid black;
     margin-top: 10px;
     padding: 8px;
+    white-space: pre-line;
   }
 </style>

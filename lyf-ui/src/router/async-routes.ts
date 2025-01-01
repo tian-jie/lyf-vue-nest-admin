@@ -58,9 +58,9 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
     name: 'board',
     component: () => import('@/layout/board-index.vue'),
     meta: {
-      title: 'Board',
+      title: 'RetroBoard',
       icon: 'icon-menu-xitong',
-      permissions: ['retrobooard:owner']
+      permissions: ['retroboard:owner']
     },
     children: [
       {
@@ -70,18 +70,18 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
         meta: {
           title: 'Rerto Board',
           icon: 'icon-menu-yonghu',
-          permissions: ['retrobooard:owner']
+          permissions: ['retroboard:owner']
         }
       },
       {
-        path: 'board/:id',
+        path: ':id',
         name: 'board-board',
         component: () => import('@/views/board/board.vue'),
         meta: {
-          title: 'Board index',
+          title: '',
           icon: 'icon-menu-yonghu',
           hidden: true,
-          permissions: ['retrobooard:owner', 'retroboard:collaborator']
+          permissions: ['retroboard:owner', 'retroboard:collaborator']
         }
       },
     ]

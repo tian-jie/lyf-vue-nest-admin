@@ -2,12 +2,12 @@
   <el-dialog v-model="dialogVisible" :title="buildTitle()" width="500px" draggable
     @open="$emit('update:modelValue', true)" @close="$emit('update:modelValue', false)">
     <el-form v-if="dialogVisible" ref="saveFormRef" :model="saveForm" :rules="formRules">
-      <el-form-item prop="content">
-        <el-input type="textarea" rows="4" v-model="saveForm.content" placeholder="请输入" clearable
+      <el-form-item prop="content" label="标题">
+        <el-input type="text" rows="4" v-model="saveForm.name" placeholder="请输入" clearable
           :maxlength="1024"></el-input>
       </el-form-item>
-      <el-form-item prop="cardGroupId">
-        <el-input type="hidden" v-model="_cardGroupId"></el-input>
+      <el-form-item prop="description" label="描述">
+        <el-input type="textarea" v-model="saveForm.description"></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -23,8 +23,8 @@ import { ref, watch, defineEmits } from 'vue'
 import { ElMessage } from 'element-plus'
 
 import { DialogTypeEnum } from '@/api/common/types'
-import { ISaveCardParams, ICard } from '@/api/card-board/types'
-import { addCard, editCard } from '@/api/card-board/index'
+import { ISaveBoardParams, IBoard } from '@/api/card-board/types'
+import { addBoard, editBoard } from '@/api/card-board/index'
 
 
 const emits = defineEmits<{
@@ -34,14 +34,14 @@ const emits = defineEmits<{
 
 const DEFAULT_FORM = {
   id: undefined,
-  content: '',
-  cardGroupId: 0,
+  name: '',
+  description: '',
 }
 
 interface IProps {
   modelValue: boolean
   dialogType: DialogTypeEnum
-  data: ICard | Record<string, unknown> // 编辑数据
+  data: IBoard | Record<string, unknown> // 编辑数据
   cardGroupId: number
 }
 
@@ -51,15 +51,14 @@ const props = withDefaults(defineProps<IProps>(), {
   data: () => {
     return {}
   },
-  cardGroupId: 0
 })
 
 const _cardGroupId = ref(props.cardGroupId)
 const dialogVisible = ref(false)
-const saveForm = ref<ISaveCardParams>(Object.assign({}, DEFAULT_FORM))
+const saveForm = ref<ISaveBoardParams>(Object.assign({}, DEFAULT_FORM))
 const saveFormRef = ref()
 const formRules = {
-  content: [{ required: true, message: '请输入内容', trigger: 'blur' }],
+  name: [{ required: true, message: '请输入标题', trigger: 'blur' }],
 }
 
 watch(
@@ -90,10 +89,8 @@ const close = () => {
  * 初始化
  */
 const init = () => {
-
   if (props.dialogType === DialogTypeEnum.ADD) {
     saveForm.value = Object.assign({}, DEFAULT_FORM, {
-      cardGroupId: props.cardGroupId
     })
   } else {
     saveForm.value = Object.assign({}, DEFAULT_FORM, props.data)
@@ -111,7 +108,7 @@ const buildTitle = () => {
  * 校验
  * @param {Fucntion} callback
  */
-const doValidate = (callback: (params: ISaveCardParams) => void) => {
+const doValidate = (callback: (params: ISaveBoardParams) => void) => {
   saveFormRef.value.validate((valid: boolean) => {
     if (valid) {
       const params = Object.assign({}, saveForm.value)
@@ -125,8 +122,8 @@ const doValidate = (callback: (params: ISaveCardParams) => void) => {
  * 新增
  */
 const handleAdd = () => {
-  doValidate((params: ISaveCardParams) => {
-    addCard(params).then(() => {
+  doValidate((params: ISaveBoardParams) => {
+    addBoard(params).then(() => {
       emits('success')
       ElMessage({
         type: 'success',
@@ -140,8 +137,8 @@ const handleAdd = () => {
  * 编辑
  */
 const handleEdit = () => {
-  doValidate((params: ISaveCardParams) => {
-    editCard(params).then(() => {
+  doValidate((params: ISaveBoardParams) => {
+    editBoard(params).then(() => {
       emits('success')
       ElMessage({
         type: 'success',

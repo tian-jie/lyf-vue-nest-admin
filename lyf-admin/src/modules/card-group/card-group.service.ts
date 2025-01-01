@@ -27,7 +27,6 @@ export class CardGroupService {
    * 获取某个用户名下的所有卡片组列表
    * @param {string} name
    * @param {number} boardId
-   * @param {string} color
    */
   async getByName(name: string, boardId: number) {
     return this.prisma.cardGroup.findMany({
