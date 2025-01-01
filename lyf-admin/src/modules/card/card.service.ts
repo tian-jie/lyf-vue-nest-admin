@@ -63,4 +63,13 @@ export class CardService {
       throw new ApiException('不存在的卡片组');
     }
   }
+
+  /**
+   * 删除
+   */
+  async delete(id: number, user: string) {
+    await this.prisma.card.delete({
+      where: { id, user }
+    });
+  }
 }
