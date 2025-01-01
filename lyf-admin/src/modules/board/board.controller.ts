@@ -1,9 +1,19 @@
-import { Body, Controller, Get, Post, Put, Query, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Put,
+  Query,
+  Req
+} from '@nestjs/common';
 import { BoardService } from './board.service';
 import {
   CreateBoardDto,
   ListQueryDto,
-  UpdateBoardDto
+  UpdateBoardDto,
+  DeleteBoardDto
 } from './dto/request.dto';
 import { Permission } from 'src/common/decorators/permission.decorator';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -11,6 +21,7 @@ import { BoardDto } from './dto/response.dto';
 import { ApiResultResponse } from 'src/common/decorators/api-result-response.decorator';
 import { CardService } from '../card/card.service';
 import { CardGroupService } from '../card-group/card-group.service';
+import { ApiException } from 'src/common/exceptions/api-exception';
 
 @ApiTags('Board管理')
 @ApiBearerAuth()
@@ -23,7 +34,7 @@ export class BoardController {
   ) {}
 
   /**
-   * 获取部门列表
+   * 获取列表
    */
   @ApiOperation({ summary: '获取Board列表' })
   @ApiResultResponse(BoardDto, { isArray: true })
@@ -52,7 +63,7 @@ export class BoardController {
   async getOne(@Body() query: ListQueryDto): Promise<BoardDto> {
     const board = await this.boardService.getById(query.id);
     if (!board) {
-      return null;
+      throw new ApiException('Board不存在', 501);
     }
 
     const boardDto: BoardDto = board as unknown as BoardDto;
@@ -100,5 +111,18 @@ export class BoardController {
   @Permission('retroboard:owner')
   async update(@Body() updateBoardDto: UpdateBoardDto) {
     await this.boardService.update(updateBoardDto);
+  }
+
+  /**
+   * 删除Board
+   * @param {UpdateBoardDto} updateBoardDto
+   */
+  @ApiOperation({ summary: '编辑Board' })
+  @ApiResultResponse()
+  @Delete()
+  @Permission('retroboard:owner')
+  async del(@Req() req, @Body() deleteBoardDto: DeleteBoardDto) {
+    // 检查当前用户是否有权限
+    await this.boardService.delete(deleteBoardDto.id, req.user.userId);
   }
 }

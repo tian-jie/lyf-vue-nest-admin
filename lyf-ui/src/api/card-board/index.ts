@@ -1,6 +1,6 @@
 import { request } from '@/utils/request'
 import { AxiosPromise } from 'axios'
-import { IQueryOneBoardParams, IBoard, ISaveCardParams, ICard, IQueryBoardsParams, ISaveCardGroupParams, ISaveBoardParams } from './types'
+import { IQueryOneBoardParams, IBoard, ICardGroup, ICard, IQueryBoardsParams, ISaveCardParams, ISaveCardGroupParams, ISaveBoardParams } from './types'
 
 /**
  * 获取一个项目的详细信息，带字表
@@ -38,7 +38,15 @@ export function editCard(params?: ISaveCardParams): AxiosPromise<ICard> {
   })
 }
 
-export function addBoard(params?: ISaveBoardParams): AxiosPromise<ICard> {
+export function deleteCard(id: number): AxiosPromise<ICard> {
+  return request({
+    method: 'DELETE',
+    url: '/card',
+    data: { id }
+  })
+}
+
+export function addBoard(params?: ISaveBoardParams): AxiosPromise<IBoard> {
   return request({
     method: 'POST',
     url: '/board',
@@ -46,11 +54,19 @@ export function addBoard(params?: ISaveBoardParams): AxiosPromise<ICard> {
   })
 }
 
-export function editBoard(params?: ISaveBoardParams): AxiosPromise<ICard> {
+export function editBoard(params?: ISaveBoardParams): AxiosPromise<IBoard> {
   return request({
     method: 'PUT',
     url: '/board',
     data: params
+  })
+}
+
+export function deleteBoard(id: number): AxiosPromise<IBoard> {
+  return request({
+    method: 'DELETE',
+    url: '/board',
+    data: { id }
   })
 }
 
@@ -67,6 +83,14 @@ export function editCardGroup(params?: ISaveCardGroupParams): AxiosPromise<ICard
     method: 'PUT',
     url: '/cardGroup',
     data: params
+  })
+}
+
+export function deleteCardGroup(id: number): AxiosPromise<ICardGroup> {
+  return request({
+    method: 'DELETE',
+    url: '/cardGroup',
+    data: { id }
   })
 }
 

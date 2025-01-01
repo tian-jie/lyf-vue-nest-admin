@@ -3,11 +3,11 @@
     @open="$emit('update:modelValue', true)" @close="$emit('update:modelValue', false)">
     <el-form v-if="dialogVisible" ref="saveFormRef" :model="saveForm" :rules="formRules">
       <el-form-item prop="content" label="标题">
-        <el-input type="text" rows="4" v-model="saveForm.name" placeholder="请输入" clearable
+        <el-input type="text" v-model="saveForm.name" placeholder="请输入" clearable
           :maxlength="1024"></el-input>
       </el-form-item>
       <el-form-item prop="description" label="描述">
-        <el-input type="textarea" v-model="saveForm.description"></el-input>
+        <el-input type="textarea" rows="6" v-model="saveForm.description"></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -58,7 +58,18 @@ const dialogVisible = ref(false)
 const saveForm = ref<ISaveBoardParams>(Object.assign({}, DEFAULT_FORM))
 const saveFormRef = ref()
 const formRules = {
-  name: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+  name: [{ required: true, message: '请输入标题', trigger: 'blur' },
+  { 
+      validator: (rule, value, callback) => {
+        if (value && value.length > 1024) {
+          callback(new Error('标题不能超过1024个字'));
+        } else {
+          callback(); // 校验通过
+        }
+      }, 
+      trigger: 'blur'
+    }
+  ],
 }
 
 watch(

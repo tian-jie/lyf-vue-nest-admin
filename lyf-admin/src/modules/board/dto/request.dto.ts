@@ -35,3 +35,12 @@ export class UpdateBoardDto extends PartialType(CreateBoardDto) {
   })
   id: number;
 }
+
+export class DeleteBoardDto {
+  @ApiProperty({ description: 'ID' })
+  @IsNumber()
+  @IsNotEmpty({
+    message: 'id不能为空'
+  })
+  id: number;
+}

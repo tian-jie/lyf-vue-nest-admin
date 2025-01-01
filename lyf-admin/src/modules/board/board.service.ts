@@ -18,7 +18,7 @@ export class BoardService {
   async getById(id: number) {
     return await this.prisma.board.findFirst({
       where: {
-        AND: [{ id }]
+        AND: [{ id }, { isDelete: false }]
       }
     });
   }
@@ -32,8 +32,26 @@ export class BoardService {
     return this.prisma.board.findMany({
       where: {
         AND: [
+          { name: this.utils.isEmpty(name) ? undefined : { equals: name } },
+          { owner: userId },
+          { isDelete: false }
+        ]
+      }
+    });
+  }
+
+  /**
+   * 获取某个用户名下的所有项目列表
+   * @param {string} name
+   * @param {number} userId
+   */
+  async filterByName(name: string, userId: number) {
+    return this.prisma.board.findMany({
+      where: {
+        AND: [
           { name: this.utils.isEmpty(name) ? undefined : { contains: name } },
-          { owner: userId }
+          { owner: userId },
+          { isDelete: false }
         ]
       }
     });
@@ -41,10 +59,13 @@ export class BoardService {
 
   /**
    * 创建Board
+   * @param createBoardDto
+   * @param owner
    */
   async create(createBoardDto: CreateBoardDto, owner: number) {
     // 不能有重名的项目
     const existBoards = await this.getByName(createBoardDto.name, owner);
+    console.error(existBoards);
     if (existBoards && existBoards.length > 0) {
       throw new ApiException('已存在同名项目。');
     }
@@ -60,17 +81,33 @@ export class BoardService {
 
   /**
    * 编辑Board
+   * @param updateDto
    */
   async update(updateDto: UpdateBoardDto) {
     const existBoard = await this.getById(updateDto.id);
     if (!existBoard) {
       throw new ApiException('不存在的项目');
     }
-    // TODO: 这里不知道为什么没有更新成功
+
     console.log('about to update board - ' + JSON.stringify(updateDto));
     await this.prisma.board.update({
       where: { id: updateDto.id },
       data: updateDto
+    });
+  }
+
+  /**
+   * 删除Board
+   * @param id
+   * @param userId
+   */
+  async delete(id: number, userId: number) {
+    console.error('about to delete board - ' + id);
+    await this.prisma.board.update({
+      where: { id, owner: userId },
+      data: {
+        isDelete: true
+      }
     });
   }
 }

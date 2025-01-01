@@ -3,12 +3,14 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateCardGroupDto, UpdateCardGroupDto } from './dto/request.dto';
 import { ApiException } from 'src/common/exceptions/api-exception';
 import { UtilsService } from '../shared/utils.service';
+import { BoardService } from '../board/board.service';
 
 @Injectable()
 export class CardGroupService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly utils: UtilsService
+    private readonly utils: UtilsService,
+    private readonly boardService: BoardService
   ) {}
 
   /**
@@ -42,7 +44,7 @@ export class CardGroupService {
   /**
    * 创建CardGroup
    */
-  async create(createCardGroupDto: CreateCardGroupDto) {
+  async create(createCardGroupDto: CreateCardGroupDto, userId: number) {
     // 不能有重名的卡片组
     const existCardGroups = await this.getByName(
       createCardGroupDto.name,
@@ -50,6 +52,12 @@ export class CardGroupService {
     );
     if (existCardGroups && existCardGroups.length > 0) {
       throw new ApiException('已存在同名卡片组。');
+    }
+
+    // 只能在自己名下的board里创建
+    const board = await this.boardService.getById(createCardGroupDto.boardId);
+    if (board.owner !== userId) {
+      throw new ApiException('只能添加自己名下Board里的卡片组');
     }
 
     await this.prisma.cardGroup.create({
@@ -65,11 +73,23 @@ export class CardGroupService {
     if (!existCardGroup) {
       throw new ApiException('不存在的卡片组');
     }
-    // TODO: 这里不知道为什么没有更新成功
-    console.log('about to update cardGroup - ' + JSON.stringify(updateDto));
     await this.prisma.cardGroup.update({
       where: { id: updateDto.id },
       data: updateDto
+    });
+  }
+
+  /**
+   * 删除
+   */
+  async delete(id: number, userId: number) {
+    const cardGroup = await this.prisma.cardGroup.findFirst({ where: { id } });
+    const board = await this.boardService.getById(cardGroup.boardId);
+    if (board.owner !== userId) {
+      throw new ApiException('不要删除别人的东西');
+    }
+    await this.prisma.cardGroup.delete({
+      where: { id }
     });
   }
 }

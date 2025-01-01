@@ -58,7 +58,7 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
     name: 'board',
     component: () => import('@/layout/board-index.vue'),
     meta: {
-      title: 'RetroBoard',
+      title: '',
       icon: 'icon-menu-xitong',
       permissions: ['retroboard:owner']
     },
