@@ -5,7 +5,7 @@
     <div class="board-list">
       <div class="board" v-for="(board) in r.boards" :key="board.id">
         <div class="title"> {{ board.name }} </div>
-        <div class="description"> {{ board.description }}</div>
+        <div class="board-description"> {{ board.description }}</div>
         <div class="navigation" > 
           <router-link class="navigation-button" :to="{ name: 'board-board', params: { id: board.id } }">
             View board
@@ -110,10 +110,11 @@ const cardGroupId = ref(0)
   padding: 8px 0px 16px 0px;
 }
 
-.description{
+.board-description{
   border-bottom: 1px solid lightgray;
   padding: 12px 0px;
   font-weight: 300;
+  white-space: pre-line;
 }
 
 .navigation{
