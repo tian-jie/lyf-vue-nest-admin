@@ -1,5 +1,4 @@
-cd lyf-admin
-npm run build
-cd ..
-copy /s lyf-ui\dist\*.* lyf-admin、dist\
-vercel
+cd ../retro-clean-for-deploy
+git pull
+docker build -t home.zainot.com:5001/retroboard:latest .
+docker push home.zainot.com:5001/retroboard:latest
