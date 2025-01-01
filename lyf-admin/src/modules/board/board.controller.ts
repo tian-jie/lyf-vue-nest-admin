@@ -39,7 +39,7 @@ export class BoardController {
   @ApiOperation({ summary: '获取Board列表' })
   @ApiResultResponse(BoardDto, { isArray: true })
   @Get('list')
-  @Permission('retroboard:owner')
+  @Permission('retroboard:board.query')
   async getList(@Req() req, @Query() query: ListQueryDto): Promise<BoardDto[]> {
     const boards = await this.boardService.getByName(
       query.name,
@@ -59,7 +59,7 @@ export class BoardController {
   @ApiOperation({ summary: '获取Board详细信息（带子表）' })
   @ApiResultResponse(BoardDto, { isArray: false })
   @Post('getOne')
-  @Permission(['retroboard:owner', 'retroboard:collaborator'])
+  @Permission('retroboard:board.query')
   async getOne(@Body() query: ListQueryDto): Promise<BoardDto> {
     const board = await this.boardService.getById(query.id);
     if (!board) {
@@ -96,7 +96,7 @@ export class BoardController {
   @ApiOperation({ summary: '创建Board' })
   @ApiResultResponse()
   @Post()
-  @Permission('retroboard:owner')
+  @Permission('retroboard:board.add')
   async create(@Req() req, @Body() createBoardDto: CreateBoardDto) {
     await this.boardService.create(createBoardDto, req.user.userId);
   }
@@ -108,19 +108,20 @@ export class BoardController {
   @ApiOperation({ summary: '编辑Board' })
   @ApiResultResponse()
   @Put()
-  @Permission('retroboard:owner')
+  @Permission('retroboard:board.edit')
   async update(@Body() updateBoardDto: UpdateBoardDto) {
     await this.boardService.update(updateBoardDto);
   }
 
   /**
    * 删除Board
-   * @param {UpdateBoardDto} updateBoardDto
+   * @param req
+   * @param deleteBoardDto
    */
-  @ApiOperation({ summary: '编辑Board' })
+  @ApiOperation({ summary: '删除Board' })
   @ApiResultResponse()
   @Delete()
-  @Permission('retroboard:owner')
+  @Permission('retroboard:board.delete')
   async del(@Req() req, @Body() deleteBoardDto: DeleteBoardDto) {
     // 检查当前用户是否有权限
     await this.boardService.delete(deleteBoardDto.id, req.user.userId);

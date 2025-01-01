@@ -1,6 +1,12 @@
 import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsDate,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString
+} from 'class-validator';
 
 export class ListQueryDto {
   @ApiPropertyOptional({ description: '名称' })
@@ -38,6 +44,15 @@ export class CreateCardDto {
 }
 
 export class UpdateCardDto extends PartialType(CreateCardDto) {
+  @ApiProperty({ description: 'ID' })
+  @IsNumber()
+  @IsNotEmpty({
+    message: 'id不能为空'
+  })
+  id: number;
+}
+
+export class DeleteCardDto {
   @ApiProperty({ description: 'ID' })
   @IsNumber()
   @IsNotEmpty({

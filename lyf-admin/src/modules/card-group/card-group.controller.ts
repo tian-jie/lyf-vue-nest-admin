@@ -66,7 +66,7 @@ export class CardGroupController {
    * 删除卡片组 （真删）
    * @param {DeleteCardGroupDto} deleteCardGroupDto
    */
-  @ApiOperation({ summary: '编辑卡片组' })
+  @ApiOperation({ summary: '删除卡片组' })
   @ApiResultResponse()
   @Delete()
   @Permission('retroboard:cardGroup:delete')
