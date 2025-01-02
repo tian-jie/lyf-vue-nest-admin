@@ -89,7 +89,6 @@ export class BoardService {
       throw new ApiException('不存在的项目');
     }
 
-    console.log('about to update board - ' + JSON.stringify(updateDto));
     await this.prisma.board.update({
       where: { id: updateDto.id },
       data: updateDto
@@ -102,7 +101,6 @@ export class BoardService {
    * @param userId
    */
   async delete(id: number, userId: number) {
-    console.error('about to delete board - ' + id);
     await this.prisma.board.update({
       where: { id, owner: userId },
       data: {
