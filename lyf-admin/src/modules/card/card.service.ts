@@ -4,13 +4,15 @@ import { CreateCardDto, UpdateCardDto } from './dto/request.dto';
 import { ApiException } from 'src/common/exceptions/api-exception';
 import { UtilsService } from '../shared/utils.service';
 import { CardGroupService } from '../card-group/card-group.service';
+import { CardGateway } from './card.gateway';
 
 @Injectable()
 export class CardService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly utils: UtilsService,
-    private readonly cardGroupService: CardGroupService
+    private readonly cardGroupService: CardGroupService,
+    private readonly cardGateway: CardGateway
   ) {}
 
   /**
@@ -40,21 +42,23 @@ export class CardService {
    */
   async create(createCardDto: CreateCardDto) {
     await this.CheckCardGroup(createCardDto.cardGroupId);
-    await this.prisma.card.create({
+    const card = await this.prisma.card.create({
       data: createCardDto
     });
+
+    this.cardGateway.sendCardUpdate(card);
   }
 
   /**
    * 编辑Card
    */
   async update(updateDto: UpdateCardDto) {
-    // TODO: 这里不知道为什么没有更新成功
-    console.log('about to update card - ' + JSON.stringify(updateDto));
-    await this.prisma.card.update({
+    const card = await this.prisma.card.update({
       where: { id: updateDto.id },
       data: updateDto
     });
+
+    this.cardGateway.sendCardUpdate(card);
   }
 
   async CheckCardGroup(id: number) {

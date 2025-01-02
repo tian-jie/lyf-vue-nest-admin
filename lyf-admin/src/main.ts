@@ -9,6 +9,15 @@ import { LoggerService } from './modules/shared/logger.service';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // 判断环境变量是否为开发环境
+  if (process.env.NODE_ENV === 'development') {
+    app.enableCors({
+      origin: process.env.CORS_ORIGIN, // 允许的前端地址
+      credentials: true // 允许携带 Cookie 或认证信息
+    });
+    console.log('CORS enabled for development');
+  }
+
   // api前缀
   app.setGlobalPrefix('api');
 
@@ -37,7 +46,10 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('swagger', app, document);
+
+  if (process.env.NODE_ENV === 'development') {
+    SwaggerModule.setup('swagger', app, document);
+  }
 
   await app.listen(process.env.APP_SERVICE_PORT ?? 3000);
 }

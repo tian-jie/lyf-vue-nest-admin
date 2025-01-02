@@ -68,12 +68,9 @@ export class BoardController {
     }
 
     const boardDto: BoardDto = board as unknown as BoardDto;
-    console.log(boardDto);
 
     // 组装CardGroup
     const cardGroups = await this.cardGroupService.getByName(null, query.id);
-    console.log(cardGroups);
-
     boardDto.cardGroups = cardGroups;
 
     // 组装Card

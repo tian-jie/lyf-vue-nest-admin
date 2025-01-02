@@ -44,15 +44,13 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted, ref, App } from 'vue'
+import { reactive, onMounted, ref, onUnmounted } from 'vue'
 import { deleteCardGroup, getOneBoard } from '@/api/card-board/index'
 import { DialogTypeEnum } from '@/api/common/types'
-import { ICardGroup } from '@/api/card-board/types'
+import { ICardGroup, ICard } from '@/api/card-board/types'
 import { useRoute, useRouter } from 'vue-router'
 import { IUserInfo } from '@/api/user/types'
 import SaveCardGroup from './save-card-group.vue'
-const route = useRoute()
-const router = useRouter()
 
 import Header from './header.vue'
 import Filter from './filter.vue'
@@ -62,7 +60,11 @@ import { PiniaPlugin, Pinia } from 'pinia'
 import { generateGUID } from '@/utils/utils'
 import { IDept } from '@/api/dept/types'
 import { Session } from '@/utils/storage'
+import socket from '@/signalr-connection'
+
 const userStore = useUserStore()
+const route = useRoute()
+const router = useRouter()
 
 const r = reactive({
   cardGroups: [] as ICardGroup[],
@@ -99,6 +101,11 @@ onMounted(async () => {
 
   // 确保刷新前，用户信息已更新
   await refresh()
+  socket.on('cardUpdated', handleCardUpdate)
+})
+
+onUnmounted(() => {
+  socket.off('cardUpdated', handleCardUpdate)
 })
 
 async function refresh() {
@@ -158,6 +165,12 @@ const saveDialogType = ref(DialogTypeEnum.ADD)
 const userInfo = ref<IUserInfo | null>({} as IUserInfo)
 
 const boardId = ref(0)
+
+const handleCardUpdate = (card: ICard) => {
+  console.log('Card updated:', card)
+  const cardGroup = r.cardGroups.find(c => c.id === card.cardGroupId)
+  cardGroup?.cards?.push(card)
+}
 </script>
 
 <style>
