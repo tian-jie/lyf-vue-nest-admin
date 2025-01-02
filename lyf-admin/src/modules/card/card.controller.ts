@@ -5,6 +5,7 @@ import { Permission } from 'src/common/decorators/permission.decorator';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CardDto } from './dto/response.dto';
 import { ApiResultResponse } from 'src/common/decorators/api-result-response.decorator';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @ApiTags('卡片管理')
 @ApiBearerAuth()
@@ -36,9 +37,9 @@ export class CardController {
   @ApiOperation({ summary: '创建卡片' })
   @ApiResultResponse()
   @Post()
-  @Permission('retroboard:card:add')
+  @Public()
   async create(@Req() req, @Body() createCardDto: CreateCardDto) {
-    createCardDto.user = req.user.userId.toString();
+    // createCardDto.user = req.user.userId.toString();
     await this.cardService.create(createCardDto);
   }
 
@@ -49,7 +50,7 @@ export class CardController {
   @ApiOperation({ summary: '编辑卡片' })
   @ApiResultResponse()
   @Put()
-  @Permission('retroboard:card:edit')
+  @Public()
   async update(@Req() req, @Body() updateCardDto: UpdateCardDto) {
     await this.cardService.update(updateCardDto);
   }

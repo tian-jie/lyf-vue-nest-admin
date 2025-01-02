@@ -1,19 +1,27 @@
 <template>
-  <el-dialog v-model="dialogVisible" :title="buildTitle()" width="500px" draggable
-    @open="$emit('update:modelValue', true)" @close="$emit('update:modelValue', false)">
+  <el-dialog
+    v-model="dialogVisible"
+    :title="buildTitle()"
+    width="500px"
+    draggable
+    @open="$emit('update:modelValue', true)"
+    @close="$emit('update:modelValue', false)"
+  >
     <el-form v-if="dialogVisible" ref="saveFormRef" :model="saveForm" :rules="formRules">
       <el-form-item prop="content">
-        <el-input type="textarea" rows="4" v-model="saveForm.content" placeholder="请输入" clearable
-          :maxlength="1024"></el-input>
+        <el-input v-model="saveForm.content" type="textarea" rows="4" placeholder="请输入" clearable :maxlength="1024">
+        </el-input>
       </el-form-item>
       <el-form-item prop="cardGroupId">
-        <el-input type="hidden" v-model="_cardGroupId"></el-input>
+        <el-input v-model="_cardGroupId" type="hidden"></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="close">取消</el-button>
-        <el-button type="primary" @click="dialogType === DialogTypeEnum.ADD ? handleAdd() : handleEdit()">确定</el-button>
+        <el-button type="primary" @click="dialogType === DialogTypeEnum.ADD ? handleAdd() : handleEdit()">
+          确定
+        </el-button>
       </div>
     </template>
   </el-dialog>
@@ -25,7 +33,7 @@ import { ElMessage } from 'element-plus'
 import { DialogTypeEnum } from '@/api/common/types'
 import { ISaveCardParams, ICard } from '@/api/card-board/types'
 import { addCard, editCard } from '@/api/card-board/index'
-
+import { Session } from '@/utils/storage'
 
 const emits = defineEmits<{
   (e: 'update:modelValue', visible: boolean): void
@@ -35,7 +43,7 @@ const emits = defineEmits<{
 const DEFAULT_FORM = {
   id: undefined,
   content: '',
-  cardGroupId: 0,
+  cardGroupId: 0
 }
 
 interface IProps {
@@ -59,7 +67,7 @@ const dialogVisible = ref(false)
 const saveForm = ref<ISaveCardParams>(Object.assign({}, DEFAULT_FORM))
 const saveFormRef = ref()
 const formRules = {
-  content: [{ required: true, message: '请输入内容', trigger: 'blur' }],
+  content: [{ required: true, message: '请输入内容', trigger: 'blur' }]
 }
 
 watch(
@@ -90,7 +98,6 @@ const close = () => {
  * 初始化
  */
 const init = () => {
-
   if (props.dialogType === DialogTypeEnum.ADD) {
     saveForm.value = Object.assign({}, DEFAULT_FORM, {
       cardGroupId: props.cardGroupId
@@ -98,7 +105,6 @@ const init = () => {
   } else {
     saveForm.value = Object.assign({}, DEFAULT_FORM, props.data)
   }
-
 }
 /**
  * dialog title
@@ -114,7 +120,7 @@ const buildTitle = () => {
 const doValidate = (callback: (params: ISaveCardParams) => void) => {
   saveFormRef.value.validate((valid: boolean) => {
     if (valid) {
-      const params = Object.assign({}, saveForm.value)
+      const params = Object.assign({}, saveForm.value, { user: Session.get('userInfo').username })
       callback(params)
     } else {
       return false

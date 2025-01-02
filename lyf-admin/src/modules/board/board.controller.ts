@@ -22,6 +22,7 @@ import { ApiResultResponse } from 'src/common/decorators/api-result-response.dec
 import { CardService } from '../card/card.service';
 import { CardGroupService } from '../card-group/card-group.service';
 import { ApiException } from 'src/common/exceptions/api-exception';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @ApiTags('Board管理')
 @ApiBearerAuth()
@@ -59,7 +60,7 @@ export class BoardController {
   @ApiOperation({ summary: '获取Board详细信息（带子表）' })
   @ApiResultResponse(BoardDto, { isArray: false })
   @Post('getOne')
-  @Permission('retroboard:board:query')
+  @Public()
   async getOne(@Body() query: ListQueryDto): Promise<BoardDto> {
     const board = await this.boardService.getById(query.id);
     if (!board) {

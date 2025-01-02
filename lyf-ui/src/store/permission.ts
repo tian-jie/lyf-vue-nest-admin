@@ -18,7 +18,7 @@ interface IPermissionState {
  */
 function hasPermission(permissions: Array<string>, route: RouteRecordRaw): boolean {
   if (route.meta && route.meta.permissions) {
-    return permissions.some(oItem => route.meta?.permissions?.includes(oItem))
+    return permissions.some(oItem => (route.meta?.permissions as Array<string>)?.includes(oItem))
   } else {
     return true
   }

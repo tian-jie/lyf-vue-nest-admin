@@ -13,7 +13,7 @@ const permissionStore = usePermissionStore(pinia)
 NProgress.configure({ showSpinner: false })
 
 // 不需要登录就可以访问的白名单页面
-const whiteList = ['/login']
+const whiteList = ['/login', '/404', '/board/\\d*']
 
 router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
   // debugger
@@ -51,7 +51,7 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
       }
     }
   } else {
-    if (whiteList.includes(to.path)) {
+    if (isWhiteUrl(to.path)) {
       // 白名单
       next()
     } else {
@@ -60,6 +60,10 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
     }
   }
 })
+
+function isWhiteUrl(url: string): boolean {
+  return whiteList.some(item => new RegExp(item).test(url))
+}
 
 router.afterEach(() => {
   NProgress.done()

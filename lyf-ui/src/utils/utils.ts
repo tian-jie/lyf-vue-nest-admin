@@ -143,3 +143,17 @@ export function arrayToTree(data: any[], id = 'id', parentId = 'parentId', child
   }
   return res
 }
+
+/**
+ * 生成短GUID
+ * @param length
+ * @returns
+ */
+export function generateGUID(length = 12): string {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  let guid = ''
+  for (let i = 0; i < length; i++) {
+    guid += chars.charAt(Math.floor(Math.random() * chars.length))
+  }
+  return guid
+}
