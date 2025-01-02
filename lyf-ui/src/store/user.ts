@@ -56,6 +56,7 @@ const userStore = defineStore('user', {
       return new Promise(resolve => {
         login(loginForm).then(({ data }) => {
           const token = data.token
+          this.logoutByFrontEnd()
           this.setToken(token)
           resolve(token)
         })

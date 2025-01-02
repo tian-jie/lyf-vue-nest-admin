@@ -80,10 +80,9 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
         meta: {
           title: '',
           icon: 'icon-menu-yonghu',
-          hidden: true,
-          permissions: ['retroboard:owner', 'retroboard:collaborator']
+          hidden: true
         }
-      },
+      }
     ]
   }
 ]

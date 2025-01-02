@@ -30,7 +30,7 @@ import { join } from 'path';
       load: [Configuration]
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, ''), // 指向你的Vue构建输出目录
+      rootPath: join(__dirname, '') // 指向你的Vue构建输出目录
     }),
     PrismaModule,
     RedisModule,

@@ -26,6 +26,16 @@ export const staticRoutes: Array<RouteRecordRaw> = [
       hidden: true,
       noTagRecord: true
     }
+  },
+  {
+    path: '/board/:id',
+    name: 'board-board',
+    component: () => import('@/views/board/board.vue'),
+    meta: {
+      title: '',
+      icon: 'icon-menu-yonghu',
+      hidden: true
+    }
   }
 ]
 export const noFoundRoute = {
